@@ -43,30 +43,22 @@ app.get('/search/:stock', function (req, res) {
     })
 })
 
-var server = http.createServer(function (req, res) {
-    if (req.method === 'POST') {
+//Checks the current stock price, only response with latest stock price
+app.get('/price/:stock', function (req, res) {
+    var symbol = req.params.stock;
+    var data = '';
+    var url = lastestPriceUrl+symbol+'&'+token;
+    https.get(url,function (response){
         var body = '';
-
-        req.on('data', function(chunk) {
+        response.on('data', function(chunk){
             body += chunk;
         });
-
-        req.on('end', function() {
-            if (req.url === '/') {
-                log('Received message: ' + body);
-            } else if (req.url = '/scheduled') {
-                log('Received task ' + req.headers['x-aws-sqsd-taskname'] + ' scheduled at ' + req.headers['x-aws-sqsd-scheduled-at']);
-            }
-
-            res.writeHead(200, 'OK', {'Content-Type': 'text/plain'});
-            res.end();
+        response.on('end', function(){
+            data = JSON.parse(body);
+            res.send(data);
         });
-    } else {
-        res.writeHead(200);
-        res.write(html);
-        res.end();
-    }
-});
+    })
+})
 
 // Listen on port 3000, IP defaults to 127.0.0.1
 app.listen(port);
