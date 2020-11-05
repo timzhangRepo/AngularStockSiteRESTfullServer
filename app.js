@@ -2,6 +2,13 @@ var express = require('express');
 var cors = require('cors');
 const https = require('https')
 
+let searchUrl = "https://api.tiingo.com/tiingo/utilities/search?query=";
+let lastestPriceUrl = "https://api.tiingo.com/iex/?tickers=";
+let dailyURL = "https://api.tiingo.com/tiingo/daily/";
+let token = "token=a24173cb58feb7109d23ffe4d3f16abe1594f938";
+
+let newsURL ="https://newsapi.org/v2/everything?q=";
+let newsToken = "&sortBy=publishedAt&apiKey=dbc03e0b69d34663a517e07fa02a0c9f";
 
 var app = express();
 app.use(cors());
