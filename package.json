@@ -2,7 +2,12 @@
   "name": "Elastic-Beanstalk-Sample-App",
   "version": "0.0.1",
   "private": true,
-  "dependencies": {},
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "~4.16.1",
+    "http-errors": "~1.6.3",
+    "request": "^2.88.2"
+  },
   "scripts": {
     "start": "node app.js"
   }
