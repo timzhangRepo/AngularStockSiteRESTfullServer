@@ -15,6 +15,10 @@ var log = function(entry) {
     fs.appendFileSync('/tmp/sample-app.log', new Date().toISOString() + ' - ' + entry + '\n');
 };
 
+app.get('/', function (req, res) {
+    res.json({msg: '200'})
+})
+
 var server = http.createServer(function (req, res) {
     if (req.method === 'POST') {
         var body = '';
