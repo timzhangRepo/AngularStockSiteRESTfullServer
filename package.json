@@ -1,15 +1,10 @@
 {
   "name": "server",
   "private": true,
-  "engines": {
-    "node": ">=12.0.0"
-  },
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "node app.js"
   },
   "dependencies": {
-    "babel-install": "^2.1.0",
-    "cookie-parser": "~1.4.4",
     "cors": "^2.8.5",
     "debug": "~2.6.9",
     "express": "~4.16.1",
