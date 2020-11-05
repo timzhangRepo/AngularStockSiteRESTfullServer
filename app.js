@@ -9,6 +9,7 @@ let token = "token=a24173cb58feb7109d23ffe4d3f16abe1594f938";
 
 let newsURL ="https://newsapi.org/v2/everything?q=";
 let newsToken = "&sortBy=publishedAt&apiKey=dbc03e0b69d34663a517e07fa02a0c9f";
+let pricesUrl = "https://api.tiingo.com/iex/"
 
 var app = express();
 app.use(cors());
@@ -60,6 +61,58 @@ app.get('/price/:stock', function (req, res) {
     })
 })
 
+app.get('/daily/:stock', function (req, res) {
+    var symbol = req.params.stock;
+    var data = '';
+    var url = dailyURL+symbol+'?'+token;
+    https.get(url,function (response){
+        var body = '';
+        response.on('data', function(chunk){
+            body += chunk;
+        });
+        response.on('end', function(){
+            data = JSON.parse(body);
+            res.send(data);
+        });
+    })
+})
+
+app.get('/news/:stock', function (req, res) {
+    var symbol = req.params.stock;
+    var data = '';
+    var url = newsURL+symbol+newsToken;
+    https.get(url,function (response){
+        var body = '';
+        response.on('data', function(chunk){
+            body += chunk;
+        });
+        response.on('end', function(){
+            data = JSON.parse(body);
+            res.send(data);
+        });
+    })
+})
+/**
+ *
+ *
+ */
+
+app.get('/prices/:todayStart/:stock', function (req, res) {
+    var symbol = req.params.stock;
+    var begins = req.params.todayStart;
+    var data = '';
+    var url = pricesUrl+symbol+'/prices?startDate='+begins+"&resampleFreq=4min&token=a24173cb58feb7109d23ffe4d3f16abe1594f938";
+    https.get(url,function (response){
+        var body = '';
+        response.on('data', function(chunk){
+            body += chunk;
+        });
+        response.on('end', function(){
+            data = JSON.parse(body);
+            res.send(data);
+        });
+    })
+})
 // Listen on port 3000, IP defaults to 127.0.0.1
 app.listen(port);
 
