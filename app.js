@@ -20,6 +20,22 @@ app.get('/', function (req, res) {
     res.json({msg: '200'})
 })
 
+app.get('/search/:stock', function (req, res) {
+    var symbol = req.params.stock;
+    var data = '';
+    var url = searchUrl+symbol+'&'+token;
+    https.get(url,function (response){
+        var body = '';
+        response.on('data', function(chunk){
+            body += chunk;
+        });
+        response.on('end', function(){
+            data = JSON.parse(body);
+            res.send(data);
+        });
+    })
+})
+
 var server = http.createServer(function (req, res) {
     if (req.method === 'POST') {
         var body = '';
