@@ -90,7 +90,6 @@ let pricesUrl = "https://api.tiingo.com/iex/"
 app.get('/prices/:todayStart/:stock', function (req, res) {
   var symbol = req.params.stock;
   var begins = req.params.todayStart;
-  console.log(begins);
   var data = '';
   var url = pricesUrl+symbol+'/prices?startDate='+begins+"&resampleFreq=4min&token=a24173cb58feb7109d23ffe4d3f16abe1594f938";
   https.get(url,function (response){
@@ -105,5 +104,5 @@ app.get('/prices/:todayStart/:stock', function (req, res) {
   })
 })
 
-
-app.listen(3000);
+const port = process.env.port || 3000;
+app.listen(port);
