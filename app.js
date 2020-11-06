@@ -113,6 +113,24 @@ app.get('/prices/:todayStart/:stock', function (req, res) {
         });
     })
 })
+app.get('/hist/:startDate/:stock', function (req, res) {
+    var symbol = req.params.stock;
+    var begins = req.params.startDate;
+    var data = '';
+    var url = dailyURL+symbol+'/prices?startDate='+begins+"&resampleFreq=daily&token=a24173cb58feb7109d23ffe4d3f16abe1594f938";
+    https.get(url,function (response){
+        var body = '';
+        response.on('data', function(chunk){
+            body += chunk;
+        });
+        response.on('end', function(){
+            data = JSON.parse(body);
+            res.send(data);
+        });
+    })
+})
+
+
 // Listen on port 3000, IP defaults to 127.0.0.1
 app.listen(port);
 
